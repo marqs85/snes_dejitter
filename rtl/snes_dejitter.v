@@ -21,6 +21,8 @@
 // SOFTWARE.
 // 
 
+`define EDGE_SENSITIVE_CLKEN
+
 module snes_dejitter(
     input MCLK_XTAL_i, //21.477272MHz master clock via oscillator
     input MCLK_EXT_i,  //ext. master clock
@@ -61,11 +63,18 @@ always @(posedge CLK_i) begin
     CSYNC_prev <= CSYNC_i;
 end
 
-//ATF1502AS macrocells support D latch mode
-//always @(negedge CLK_i) begin
+`ifdef EDGE_SENSITIVE_CLKEN
+//Update clock gate enable signal on negative edge
+always @(negedge CLK_i) begin
+    gclk_en <= (g_cyc == 0);
+end
+`else
+//ATF1502AS macrocells support D latch mode,
+//enabling level sensitive update of gclk_en during negative phase
 always @(*) begin
-    if (~CLK_i)
+    if (!CLK_i)
         gclk_en <= (g_cyc == 0);
 end
+`endif
 
 endmodule
