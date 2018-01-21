@@ -1,14 +1,14 @@
 (export (version D)
   (design
     (source /home/markus/Code/snes_dejitter/pcb/snes_dejitter.sch)
-    (date "2017-12-23T22:57:52 EET")
+    (date "2018-01-21T17:23:03 EET")
     (tool "Eeschema 4.0.7+dfsg1-1")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
         (title snes_dejitter)
         (company)
-        (rev 1.0)
-        (date 2017-12-16)
+        (rev 1.1)
+        (date 2018-01-21)
         (source snes_dejitter.sch)
         (comment (number 1) (value ""))
         (comment (number 2) (value ""))
@@ -209,7 +209,7 @@
       (sheetpath (names /) (tstamps /))
       (tstamp 5A3BEA28))
     (comp (ref R14)
-      (value 210)
+      (value 300)
       (footprint custom_components:SM0603_Resistor_libcms)
       (libsource (lib device) (part R))
       (sheetpath (names /) (tstamps /))
@@ -379,12 +379,12 @@
       (pins
         (pin (num 1) (name 1) (type passive)))))
   (libraries
-    (library (logical conn)
-      (uri /usr/share/kicad/library/conn.lib))
-    (library (logical transistors)
-      (uri /usr/share/kicad/library/transistors.lib))
     (library (logical device)
       (uri /usr/share/kicad/library/device.lib))
+    (library (logical transistors)
+      (uri /usr/share/kicad/library/transistors.lib))
+    (library (logical conn)
+      (uri /usr/share/kicad/library/conn.lib))
     (library (logical custom_components)
       (uri /home/markus/Code/snes_dejitter/pcb/custom_components.lib)))
   (nets

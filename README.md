@@ -6,7 +6,7 @@ snes_dejitter is a mod board which eliminates sync jitter of NES/SNES 240p modes
 Requirements for building the board and CPLD firmware
 --------------------------------------------------------
 * Hardware
-  * PCB + parts
+  * [PCB](https://oshpark.com/shared_projects/ARWIZrYV) + [parts](pcb/bom/snes_dejitter.ods)
 
 * Software
   * [Altera Quartus II version 13.0sp1 with MAX7000 support](http://dl.altera.com/13.0sp1/?edition=web)

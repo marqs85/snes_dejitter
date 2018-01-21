@@ -1,5 +1,4 @@
 EESchema Schematic File Version 2
-LIBS:snes_dejitter-rescue
 LIBS:power
 LIBS:device
 LIBS:switches
@@ -40,8 +39,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "snes_dejitter"
-Date "2017-12-23"
-Rev "1.0"
+Date "2018-01-21"
+Rev "1.1"
 Comp ""
 Comment1 ""
 Comment2 ""
@@ -863,7 +862,7 @@ L R R14
 U 1 1 5A3BF142
 P 9250 2600
 F 0 "R14" V 9330 2600 50  0000 C CNN
-F 1 "210" V 9250 2600 50  0000 C CNN
+F 1 "300" V 9250 2600 50  0000 C CNN
 F 2 "custom_components:SM0603_Resistor_libcms" V 9180 2600 50  0001 C CNN
 F 3 "" H 9250 2600 50  0001 C CNN
 	1    9250 2600
