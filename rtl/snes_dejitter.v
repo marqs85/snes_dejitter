@@ -24,55 +24,59 @@
 `define EDGE_SENSITIVE_CLKEN
 
 module snes_dejitter(
-    input MCLK_XTAL_i, //21.477272MHz master clock via oscillator
-    input MCLK_EXT_i,  //ext. master clock
-    input MCLK_SEL_i,
+    input MCLK_XTAL_i, //NTSC master clock source: 21.477272MHz from oscillator circuit
+    input MCLK_EXT_i,  //PAL master clock source: 21.28137MHz (3-CHIP) or 17.73MHz (1-CHIP) from external source
+    input MCLK_SEL_i,  //Output clock/csync mode: De-jitter/NTSC (0), Bypass/PAL (1)
     input CSYNC_i,
     output MCLK_XTAL_o,
     output GCLK_o,
-    output reg CSYNC_o
+    output CSYNC_o
 );
 
-wire CLK_i = MCLK_SEL_i ? MCLK_EXT_i : MCLK_XTAL_o;
+wire mclk_ntsc = MCLK_XTAL_i;
+wire mclk_ntsc_dejitter = mclk_ntsc & gclk_en;
+wire mclk_pal = MCLK_EXT_i;
 
-assign GCLK_o = CLK_i & gclk_en;
+assign GCLK_o = MCLK_SEL_i ? mclk_pal : mclk_ntsc_dejitter;
+assign CSYNC_o = MCLK_SEL_i ? CSYNC_i : csync_dejitter;
 
 assign MCLK_XTAL_o = ~MCLK_XTAL_i;
 
 reg [10:0] h_cnt;
 reg [2:0] g_cyc;
-reg CSYNC_prev;
+reg csync_prev;
+reg csync_dejitter;
 reg gclk_en;
 
 
-always @(posedge CLK_i) begin
-    if ((h_cnt >= 1024) && (CSYNC_prev==1'b1) && (CSYNC_i==1'b0)) begin
+always @(posedge mclk_ntsc) begin
+    if ((h_cnt >= 1024) && (csync_prev==1'b1) && (CSYNC_i==1'b0)) begin
         h_cnt <= 0;
         if (h_cnt == 340*4-1)
             g_cyc <= 4;
         else
-            CSYNC_o <= CSYNC_i;
+            csync_dejitter <= CSYNC_i;
     end else begin
         h_cnt <= h_cnt + 1'b1;
         if (g_cyc > 0)
             g_cyc <= g_cyc - 1'b1;
         if (g_cyc <= 1)
-            CSYNC_o <= CSYNC_i;
+            csync_dejitter <= CSYNC_i;
     end
 
-    CSYNC_prev <= CSYNC_i;
+    csync_prev <= CSYNC_i;
 end
 
 `ifdef EDGE_SENSITIVE_CLKEN
 //Update clock gate enable signal on negative edge
-always @(negedge CLK_i) begin
+always @(negedge mclk_ntsc) begin
     gclk_en <= (g_cyc == 0);
 end
 `else
 //ATF1502AS macrocells support D latch mode,
 //enabling level sensitive update of gclk_en during negative phase
 always @(*) begin
-    if (!CLK_i)
+    if (!mclk_ntsc)
         gclk_en <= (g_cyc == 0);
 end
 `endif

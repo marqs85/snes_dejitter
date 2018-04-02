@@ -49,7 +49,7 @@ CPLD image build procedure
 ![atmisp1](/pics/atmisp_chain.png)
 ![atmisp1](/pics/atmisp_setup.png)
 
-Board flashing and installation
+Board flashing
 --------------------------------------------------------
 The board can be flashed using any OpenOCD supported JTAG programmer that provides 3.3V-5V IO signal level. A standalone snes_jitter board is flashed by hooking all of its 6 JTAG header pins to respective pins of the programmer/cable, and by running flash procedure specified below. After the board has been installed to NES/SNES, firmware can be subsequently updated, but in this method 5V pin of the JTAG connector MUST be left disconnected, and programming needs to be done while NES/SNES is powered on (without a game is ok). The update procedure is similar in both cases:
 
@@ -72,3 +72,15 @@ telnet localhost 4444
 > svf <full_path_to_svf_file>
 ~~~~
 4. The programming procedure should finish with no error, after which you can finish installation by powering off hardware and disconnecting the programmer.
+
+Installation
+--------------------------------------------------------
+General descriptions on board pins are in table below. Model-specific installation instructions are added to separate <a href="installation/">subdirectories</a>.
+
+Board pin  | Description
+---------- | -------------
+CSYNC_i    | TTL C-sync signal from the console
+MCLK_EXT_i | External clock input. Used only in PAL mode, not needed in pure NTSC installations.
+CLK_SEL_i  | Master clock source selection (0=internal/NTSC, 1=external/PAL). In PAL mode, MCLK and CSYNC are bypassed to output. Pin is pulled low internally, so it can be left disconnected in pure NTSC installations. Connected to PALMODE in multiregion installations. Can be forced high by bridging JP1, but must never be done if the pin is wired to console.
+MCLK_o     | Clock output. See model-specific instructions on voltage divider (R13,R14) requirement.
+CSYNC_o    | C-sync output (~2.5Vpp unterminated, ~1.1Vpp to 75ohm termination) to an isolated multi-AV pin. Driver circuit is identical to SHVC-CPU-01.
