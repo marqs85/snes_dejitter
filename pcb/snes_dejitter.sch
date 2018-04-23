@@ -39,8 +39,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "snes_dejitter"
-Date "2018-01-21"
-Rev "1.1"
+Date "2018-04-22"
+Rev "1.2"
 Comp ""
 Comment1 ""
 Comment2 ""
@@ -396,21 +396,8 @@ Wire Notes Line
 	500  3050 2350 3050
 Wire Notes Line
 	500  3050 500  2650
-Text Notes 500  3950 0    60   ~ 0
-OPTIONAL for\n1. dual-frequency:\n   MCLK_EXT_i -> 21.28137MHz from S-CLK\n   CLK_SEL_i -> PALMODE\n   JP1 -> OPEN\n2. MCLK_EXT input only:\n   MCLK_EXT_i -> 21.28137MHz from S-CLK\n   CLK_SEL_i -> NC\n   JP1 -> CLOSED
-$Comp
-L Jumper_NO_Small JP1
-U 1 1 5A3089DC
-P 1800 2850
-F 0 "JP1" H 1800 2930 50  0000 C CNN
-F 1 "Jumper_NO_Small" H 1810 2790 50  0001 C CNN
-F 2 "custom_components:SMD_JUMPER" H 1800 2850 50  0001 C CNN
-F 3 "" H 1800 2850 50  0001 C CNN
-	1    1800 2850
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	1800 2750 2300 2750
+Text Notes 500  3450 0    60   ~ 0
+Optional for 50Hz mode:\n   MCLK_EXT_i -> 21.28137MHz from S-CLK (PAL 3-CHIP)\n                or 17.73MHz from ext. source (1-CHIP+DFO)\n   CLK_SEL_i -> PALMODE
 Wire Wire Line
 	1800 2950 1150 2950
 Wire Notes Line
@@ -545,23 +532,23 @@ $EndComp
 $Comp
 L C_Small C8
 U 1 1 5A30D1B3
-P 9100 3600
-F 0 "C8" H 9110 3670 50  0000 L CNN
-F 1 "330p" H 9110 3520 50  0000 L CNN
-F 2 "custom_components:SM0603_Capa_libcms" H 9100 3600 50  0001 C CNN
-F 3 "" H 9100 3600 50  0001 C CNN
-	1    9100 3600
+P 9100 3800
+F 0 "C8" H 9110 3870 50  0000 L CNN
+F 1 "330p" H 9110 3720 50  0000 L CNN
+F 2 "custom_components:SM0603_Capa_libcms" H 9100 3800 50  0001 C CNN
+F 3 "" H 9100 3800 50  0001 C CNN
+	1    9100 3800
 	1    0    0    -1  
 $EndComp
 $Comp
 L GND #PWR014
 U 1 1 5A30D36F
-P 9100 3700
-F 0 "#PWR014" H 9100 3450 50  0001 C CNN
-F 1 "GND" H 9100 3550 50  0000 C CNN
-F 2 "" H 9100 3700 50  0001 C CNN
-F 3 "" H 9100 3700 50  0001 C CNN
-	1    9100 3700
+P 9100 3900
+F 0 "#PWR014" H 9100 3650 50  0001 C CNN
+F 1 "GND" H 9100 3750 50  0000 C CNN
+F 2 "" H 9100 3900 50  0001 C CNN
+F 3 "" H 9100 3900 50  0001 C CNN
+	1    9100 3900
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -573,8 +560,6 @@ Wire Wire Line
 	5100 2000 5100 1100
 Text Label 5100 1950 1    60   ~ 0
 MCLK_SEL_i
-Text Label 1900 2750 0    60   ~ 0
-DVDD5V
 $Comp
 L R_Small R6
 U 1 1 5A3541E2
@@ -860,12 +845,12 @@ $EndComp
 $Comp
 L R R14
 U 1 1 5A3BF142
-P 9250 2600
-F 0 "R14" V 9330 2600 50  0000 C CNN
-F 1 "300" V 9250 2600 50  0000 C CNN
-F 2 "custom_components:SM0603_Resistor_libcms" V 9180 2600 50  0001 C CNN
-F 3 "" H 9250 2600 50  0001 C CNN
-	1    9250 2600
+P 9250 2800
+F 0 "R14" V 9330 2800 50  0000 C CNN
+F 1 "300" V 9250 2800 50  0000 C CNN
+F 2 "custom_components:SM0603_Resistor_libcms" V 9180 2800 50  0001 C CNN
+F 3 "" H 9250 2800 50  0001 C CNN
+	1    9250 2800
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -884,12 +869,12 @@ Wire Wire Line
 $Comp
 L GND #PWR024
 U 1 1 5A3BF40D
-P 9250 2750
-F 0 "#PWR024" H 9250 2500 50  0001 C CNN
-F 1 "GND" H 9250 2600 50  0000 C CNN
-F 2 "" H 9250 2750 50  0001 C CNN
-F 3 "" H 9250 2750 50  0001 C CNN
-	1    9250 2750
+P 9250 2950
+F 0 "#PWR024" H 9250 2700 50  0001 C CNN
+F 1 "GND" H 9250 2800 50  0000 C CNN
+F 2 "" H 9250 2950 50  0001 C CNN
+F 3 "" H 9250 2950 50  0001 C CNN
+	1    9250 2950
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -934,6 +919,28 @@ F 1 "GND" H 9350 2100 50  0000 C CNN
 F 2 "" H 9350 2250 50  0001 C CNN
 F 3 "" H 9350 2250 50  0001 C CNN
 	1    9350 2250
+	0    1    1    0   
+$EndComp
+$Comp
+L Jumper_NO_Small JP3
+U 1 1 5ADC4EC6
+P 9100 3600
+F 0 "JP3" H 9100 3680 50  0000 C CNN
+F 1 "Jumper_NO_Small" H 9110 3540 50  0001 C CNN
+F 2 "custom_components:SMD_JUMPER" H 9100 3600 50  0001 C CNN
+F 3 "" H 9100 3600 50  0001 C CNN
+	1    9100 3600
+	0    1    1    0   
+$EndComp
+$Comp
+L Jumper_NO_Small JP2
+U 1 1 5ADC57AE
+P 9250 2550
+F 0 "JP2" H 9250 2630 50  0000 C CNN
+F 1 "Jumper_NO_Small" H 9260 2490 50  0001 C CNN
+F 2 "custom_components:SMD_JUMPER" H 9250 2550 50  0001 C CNN
+F 3 "" H 9250 2550 50  0001 C CNN
+	1    9250 2550
 	0    1    1    0   
 $EndComp
 $EndSCHEMATC

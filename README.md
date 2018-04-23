@@ -6,7 +6,7 @@ snes_dejitter is a mod board which eliminates sync jitter of NES/SNES 240p modes
 Requirements for building the board and CPLD firmware
 --------------------------------------------------------
 * Hardware
-  * [PCB](https://oshpark.com/shared_projects/ARWIZrYV) + [parts](pcb/bom/snes_dejitter.ods)
+  * [PCB](https://oshpark.com/shared_projects/XwqVt6Gq) + [parts](pcb/bom/snes_dejitter.ods)
 
 * Software
   * [Altera Quartus II version 13.0sp1 with MAX7000 support](http://dl.altera.com/13.0sp1/?edition=web)
@@ -53,7 +53,7 @@ Board flashing
 --------------------------------------------------------
 The board can be flashed using any OpenOCD supported JTAG programmer that provides 3.3V-5V IO signal level. A standalone snes_jitter board is flashed by hooking all of its 6 JTAG header pins to respective pins of the programmer/cable, and by running flash procedure specified below. After the board has been installed to NES/SNES, firmware can be subsequently updated, but in this method 5V pin of the JTAG connector MUST be left disconnected, and programming needs to be done while NES/SNES is powered on (without a game is ok). The update procedure is similar in both cases:
 
-1. Create openocd.conf that matches your JTAG programmer. A configuration file for FT2232-based programmers is found in installation/openocd-ft2232.cfg, and it uses following standard pinout for data signals:
+1. Create openocd.conf that matches your JTAG programmer. A configuration file for FT2232-based programmers is found in installation/openocd-ft2232.conf, and it uses following standard pinout for data signals:
 
 Board pin | Programmer pin
 --------- | -------------
@@ -81,6 +81,6 @@ Board pin  | Description
 ---------- | -------------
 CSYNC_i    | TTL C-sync signal from the console
 MCLK_EXT_i | External clock input. Used only in PAL mode, not needed in pure NTSC installations.
-CLK_SEL_i  | Master clock source selection (0=internal/NTSC, 1=external/PAL). In PAL mode, MCLK and CSYNC are bypassed to output. Pin is pulled low internally, so it can be left disconnected in pure NTSC installations. Connected to PALMODE in multiregion installations. Can be forced high by bridging JP1, but must never be done if the pin is wired to console.
-MCLK_o     | Clock output. See model-specific instructions on voltage divider (R13,R14) requirement.
+CLK_SEL_i  | Master clock source selection (0=internal/NTSC, 1=external/PAL). In PAL mode, MCLK and CSYNC are bypassed to output. Pin is pulled low internally, so it can be left disconnected in pure NTSC installations. Connected to PALMODE in multiregion installations. Can be forced high by bridging JP1 (pre-1.2 boards only), but must never be done if the pin is wired to console.
+MCLK_o     | Clock output. See model-specific instructions on voltage divider (R13,R14 / JP2) requirement.
 CSYNC_o    | C-sync output (~2.5Vpp unterminated, ~1.1Vpp to 75ohm termination) to an isolated multi-AV pin. Driver circuit is identical to SHVC-CPU-01.
