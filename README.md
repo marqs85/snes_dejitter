@@ -31,7 +31,11 @@ CPLD image build procedure
 ~~~~
 1. Select .pof file from previous step as input file
 2. Select 1502AS as device
-3. Set Open Collector to "Off", and JTAG mode to "On"
+3. Change the following options:
+  * Reduce MC power -> On
+  * Open Collector -> Off
+  * JTAG mode -> On
+  * Slew rate -> Slow
 4. Click "Run"
 ~~~~
 ![pof2jed](/pics/pof2jed.png)
@@ -82,5 +86,5 @@ Board pin  | Description
 CSYNC_i    | TTL C-sync signal from the console
 MCLK_EXT_i | External clock input. Used only in PAL mode, not needed in pure NTSC installations.
 CLK_SEL_i  | Master clock source selection (0=internal/NTSC, 1=external/PAL). In PAL mode, MCLK and CSYNC are bypassed to output. Pin is pulled low internally, so it can be left disconnected in pure NTSC installations. Connected to PALMODE in multiregion installations. Can be forced high by bridging JP1 (pre-1.2 boards only), but must never be done if the pin is wired to console.
-MCLK_o     | Clock output. See model-specific instructions on voltage divider (R13,R14 / JP2) requirement.
-CSYNC_o    | C-sync output (~2.5Vpp unterminated, ~1.1Vpp to 75ohm termination) to an isolated multi-AV pin. Driver circuit is identical to SHVC-CPU-01.
+MCLK_o     | Clock output. An optional voltage divider (R13,R14 / JP2) can be used to reduce output level from ~4Vpp to ~3Vpp, see model-specific instructions for more details.
+CSYNC_o    | C-sync output (~2.5Vpp unterminated, ~1.1Vpp into 75ohm termination) to an isolated multi-AV pin. Driver circuit is identical to SHVC-CPU-01. JP3 connects optional 330pF output capacitor that may not be present on console mainboard (not strictly needed, reduces potential noise at the price of less sharp transition time), see model-specific instructions for more details.

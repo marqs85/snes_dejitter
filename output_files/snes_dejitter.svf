@@ -1,5 +1,5 @@
 //  SVF file written by ATMISP version 7.2
-//  Created on: Thu Mar 22 00:32:52 2018
+//  Created on: Wed May 23 23:51:57 2018
 //  SVF Rev. D  
 TRST ABSENT;
 ENDIR IDLE;
@@ -1599,7 +1599,7 @@ SIR 10 TDI (2bf);
 SIR 10 TDI (2a1);
 SDR 11 TDI (002);
 SIR 10 TDI (290);
-SDR 86 TDI (3fffff4000000000000000);
+SDR 86 TDI (3fffff4000000099999999);
 SIR 10 TDI (29e);
 STATE IDLE;
 RUNTEST 30001E-6 SEC;
@@ -1607,7 +1607,7 @@ SIR 10 TDI (2bf);
 SIR 10 TDI (2a1);
 SDR 11 TDI (003);
 SIR 10 TDI (290);
-SDR 86 TDI (3fffffffcfffffdab9199a);
+SDR 86 TDI (3fffffffcfffffdbb9999b);
 SIR 10 TDI (29e);
 STATE IDLE;
 RUNTEST 30001E-6 SEC;
@@ -1647,7 +1647,7 @@ SIR 10 TDI (2bf);
 SIR 10 TDI (2a1);
 SDR 11 TDI (008);
 SIR 10 TDI (290);
-SDR 86 TDI (3fffff4000000403ff0cfc);
+SDR 86 TDI (3fffff400000049bff9dfd);
 SIR 10 TDI (29e);
 STATE IDLE;
 RUNTEST 30001E-6 SEC;
@@ -1655,7 +1655,7 @@ SIR 10 TDI (2bf);
 SIR 10 TDI (2a1);
 SDR 11 TDI (009);
 SIR 10 TDI (290);
-SDR 86 TDI (3fffffffffffffaaff1dfe);
+SDR 86 TDI (3fffffffffffffbbff9dff);
 SIR 10 TDI (29e);
 STATE IDLE;
 RUNTEST 30001E-6 SEC;
@@ -3499,8 +3499,8 @@ SIR 10 TDI (28c);
 STATE IDLE;
 RUNTEST 20001E-6 SEC;
 SIR 10 TDI (290);
-SDR 86 TDI (3fffff4000000000000000)
-	TDO (3fffff4000000000000000)
+SDR 86 TDI (3fffff4000000099999999)
+	TDO (3fffff4000000099999999)
 	MASK (3fffffffffffffffffffff);
 SIR 10 TDI (2a1);
 SDR 11 TDI (003);
@@ -3508,8 +3508,8 @@ SIR 10 TDI (28c);
 STATE IDLE;
 RUNTEST 20001E-6 SEC;
 SIR 10 TDI (290);
-SDR 86 TDI (3fffffffcfffffdab9199a)
-	TDO (3fffffffcfffffdab9199a)
+SDR 86 TDI (3fffffffcfffffdbb9999b)
+	TDO (3fffffffcfffffdbb9999b)
 	MASK (3fffffffffffffffffffff);
 SIR 10 TDI (2a1);
 SDR 11 TDI (004);
@@ -3553,8 +3553,8 @@ SIR 10 TDI (28c);
 STATE IDLE;
 RUNTEST 20001E-6 SEC;
 SIR 10 TDI (290);
-SDR 86 TDI (3fffff4000000403ff0cfc)
-	TDO (3fffff4000000403ff0cfc)
+SDR 86 TDI (3fffff400000049bff9dfd)
+	TDO (3fffff400000049bff9dfd)
 	MASK (3fffffffffffffffffffff);
 SIR 10 TDI (2a1);
 SDR 11 TDI (009);
@@ -3562,8 +3562,8 @@ SIR 10 TDI (28c);
 STATE IDLE;
 RUNTEST 20001E-6 SEC;
 SIR 10 TDI (290);
-SDR 86 TDI (3fffffffffffffaaff1dfe)
-	TDO (3fffffffffffffaaff1dfe)
+SDR 86 TDI (3fffffffffffffbbff9dff)
+	TDO (3fffffffffffffbbff9dff)
 	MASK (3fffffffffffffffffffff);
 SIR 10 TDI (2a1);
 SDR 11 TDI (00a);
