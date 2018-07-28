@@ -47,29 +47,31 @@ reg [2:0] g_cyc;
 reg csync_prev;
 reg csync_dejitter;
 reg gclk_en;
+reg CSYNC_i_L;
 
 
 always @(posedge mclk_ntsc) begin
-    if ((h_cnt >= 1024) && (csync_prev==1'b1) && (CSYNC_i==1'b0)) begin
+    if ((h_cnt >= 1024) && (csync_prev==1'b1) && (CSYNC_i_L==1'b0)) begin
         h_cnt <= 0;
         if (h_cnt == 340*4-1)
             g_cyc <= 4;
         else
-            csync_dejitter <= CSYNC_i;
+            csync_dejitter <= CSYNC_i_L;
     end else begin
         h_cnt <= h_cnt + 1'b1;
         if (g_cyc > 0)
             g_cyc <= g_cyc - 1'b1;
         if (g_cyc <= 1)
-            csync_dejitter <= CSYNC_i;
+            csync_dejitter <= CSYNC_i_L;
     end
 
-    csync_prev <= CSYNC_i;
+    csync_prev <= CSYNC_i_L;
 end
 
 `ifdef EDGE_SENSITIVE_CLKEN
 //Update clock gate enable signal on negative edge
 always @(negedge mclk_ntsc) begin
+	CSYNC_i_L <= CSYNC_i;
     gclk_en <= (g_cyc == 0);
 end
 `else
