@@ -6,7 +6,7 @@ snes_dejitter is a mod board which eliminates sync jitter of NES/SNES 240p modes
 Requirements for building the board and CPLD firmware
 --------------------------------------------------------
 * Hardware
-  * [PCB](https://oshpark.com/shared_projects/XwqVt6Gq) + [parts](pcb/bom/snes_dejitter.ods)
+  * [PCB](https://oshpark.com/shared_projects/BUQd5HjY) + [parts](pcb/bom/snes_dejitter.ods)
 
 * Software
   * [Altera Quartus II version 13.0sp1 with MAX7000 support](http://dl.altera.com/13.0sp1/?edition=web)
@@ -25,6 +25,9 @@ Requirements for flashing CPLD firmware
 
 CPLD image build procedure
 --------------------------------------------------------
+
+**NOTE:** Only needed when building a custom firmware. Pre-built images can be found under output_files/ on master and nes-fix (recommended for NES/FC) branches.
+
 1. Open the project file in Quartus, and run compilation
 
 2. Convert MAX7000 targeted POF object file into JEDEC file suitable for 1502AS via winpof2jed.exe:
@@ -70,7 +73,7 @@ TDO       | ADBUS2
 ~~~~
 openocd -f openocd.conf
 ~~~~
-3. OpenOCD auto-probing should report a TAP controller with id 0x0150203f. You can now open another terminal to interact with openocd and program the chip:
+3. OpenOCD auto-probing should report a TAP controller with id 0x0150203f - if not, check connections and configuration. When successful, open another terminal to interact with openocd and program the chip:
 ~~~~
 telnet localhost 4444
 > svf <full_path_to_svf_file>
@@ -88,3 +91,45 @@ MCLK_EXT_i | External clock input. Used only in PAL mode, not needed in pure NTS
 CLK_SEL_i  | Master clock source selection (0=internal/NTSC, 1=external/PAL). In PAL mode, MCLK and CSYNC are bypassed to output. Pin is pulled low internally, so it can be left disconnected in pure NTSC installations. Connected to PALMODE in multiregion installations. Can be forced high by bridging JP1 (pre-1.2 boards only), but must never be done if the pin is wired to console.
 MCLK_o     | Clock output. An optional voltage divider (R13,R14 / JP2) can be used to reduce output level from ~4Vpp to ~3Vpp, see model-specific instructions for more details.
 CSYNC_o    | C-sync output (~2.5Vpp unterminated, ~1.1Vpp into 75ohm termination) to an isolated multi-AV pin. Driver circuit is identical to SHVC-CPU-01. JP3 connects optional 330pF output capacitor that may not be present on console mainboard (not strictly needed, reduces potential noise at the price of less sharp transition time), see model-specific instructions for more details.
+
+Jumper  | Description
+------- | -------------
+JP1     | Forces CLK_SEL_i high. Removed on v1.2 since it was mostly for debugging purposes.
+JP2     | Enables MCLK_o voltage divider. Recommended for NES installations to ensure signal level is safe for NESRGB.
+JP3     | Connects optional 330pF output capacitor on CSYNC_o.
+JP4     | Bypass TDO voltage divider. Recommended if board is flashed with a 5V programmer.
+
+PCB revision history
+--------------------------------------------------------
+### v1.3
+* change (R4,R5) and (R9,R10) voltage divider values
+* add JP4 to improve interoperability with 5V programmers
+* add R15 pulldown to prevent floating input pin
+
+### v1.2
+* remove JP1
+* add JP2 and JP3 to easily support different setups
+
+### v1.1
+* change R14 value
+* change JTAG connector
+
+### v1.0
+* first revision
+
+FAQ
+--------------------------------------------------------
+### Can I buy the board pre-assembled / pre-installed
+* VGP [store](https://www.videogameperfection.com/products/snes-jitter-kit/) offers pre-assembled boards with optional installation service.
+
+### Can I flash the board with USB Blaster?
+* USB Blaster is compatible with OpenOCD, but you have to check your programmer details (official/clone, 5V compatibility) and hook up and configure it accordingly. USB Blaster (or its usual clones) does not supply voltage on the board, but instead require connection from the board's supply to Vcc(TRGT) pin of the debug connector. You must thus power the board externally, connect 5V to Vcc(TRGT) (make sure your programmer supports 5V operation!) and possibly short JP4. Some clones also require hacks on OpenOCD to operate correctly, see the [thread](https://shmups.system11.org/viewtopic.php?f=6&t=61285) for more details.
+
+### Which other programmers can I use?
+* OpenOCD supports a wide range of [debug adapters](http://openocd.org/doc/html/Debug-Adapter-Hardware.html). Several people also have programmed their boards using a Raspberry Pi. Instructions and tools for RPI can be found on the [thread](https://shmups.system11.org/viewtopic.php?f=6&t=61285).
+
+### Does the mod change game speed in any way?
+* Yes, but in very minimal way - in 1 hour of gameplay a de-jittered system falls less than 2 frames behind a vanilla system.
+
+### Is it possible to disable de-jitter functionality after installation?
+* When the board is installed so that MCLK_EXT_i and CLK_SEL_i are not used, a simple bypass can be added without firmware modifications. To do that, connect MCLK_EXT_i to CPLD pin 37 (MCLK_XTAL_i) and add a ON-OFF switch that connects MCLK_SEL_i to 5V.
