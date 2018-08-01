@@ -6,7 +6,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "snes_dejitter"
-Date "2018-07-29"
+Date "2018-08-01"
 Rev "1.3"
 Comp ""
 Comment1 ""
@@ -50,9 +50,7 @@ Wire Wire Line
 	1100 1300 1200 1300
 Text Label 1200 1300 0    60   ~ 0
 TDI
-Wire Wire Line
-	2200 1200 2050 1200
-Text Label 2050 1200 0    60   ~ 0
+Text Label 2200 1200 0    60   ~ 0
 TDO
 Wire Wire Line
 	1100 1000 1750 1000
@@ -665,36 +663,23 @@ Wire Wire Line
 $Comp
 L Device:R_Small R4
 U 1 1 5A356677
-P 1850 1300
-F 0 "R4" H 1880 1320 50  0000 L CNN
-F 1 "1k" H 1880 1260 50  0000 L CNN
-F 2 "custom_components:SM0603_Resistor_libcms" H 1850 1300 50  0001 C CNN
-F 3 "" H 1850 1300 50  0001 C CNN
-	1    1850 1300
-	1    0    0    -1  
+P 2050 1200
+F 0 "R4" H 2080 1220 50  0000 L CNN
+F 1 "39" H 2080 1160 50  0000 L CNN
+F 2 "custom_components:SM0603_Resistor_libcms" H 2050 1200 50  0001 C CNN
+F 3 "" H 2050 1200 50  0001 C CNN
+	1    2050 1200
+	0    -1   -1   0   
 $EndComp
-$Comp
-L Device:R_Small R5
-U 1 1 5A35667D
-P 1850 1500
-F 0 "R5" H 1880 1520 50  0000 L CNN
-F 1 "5.6k" H 1880 1460 50  0000 L CNN
-F 2 "custom_components:SM0603_Resistor_libcms" H 1850 1500 50  0001 C CNN
-F 3 "" H 1850 1500 50  0001 C CNN
-	1    1850 1500
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	1100 1400 1850 1400
 $Comp
 L power:GND #PWR020
 U 1 1 5A356685
-P 1850 1600
-F 0 "#PWR020" H 1850 1350 50  0001 C CNN
-F 1 "GND" H 1850 1450 50  0000 C CNN
-F 2 "" H 1850 1600 50  0001 C CNN
-F 3 "" H 1850 1600 50  0001 C CNN
-	1    1850 1600
+P 1950 1700
+F 0 "#PWR020" H 1950 1450 50  0001 C CNN
+F 1 "GND" H 1950 1550 50  0000 C CNN
+F 2 "" H 1950 1700 50  0001 C CNN
+F 3 "" H 1950 1700 50  0001 C CNN
+	1    1950 1700
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -927,20 +912,14 @@ Wire Wire Line
 $Comp
 L Device:Jumper_NO_Small JP4
 U 1 1 5B5E6343
-P 2050 1300
-F 0 "JP4" H 2050 1380 50  0000 C CNN
-F 1 "Jumper_NO_Small" H 2060 1240 50  0001 C CNN
-F 2 "custom_components:SMD_JUMPER" H 2050 1300 50  0001 C CNN
-F 3 "" H 2050 1300 50  0001 C CNN
-	1    2050 1300
+P 1950 1400
+F 0 "JP4" H 1950 1480 50  0000 C CNN
+F 1 "Jumper_NO_Small" H 1960 1340 50  0001 C CNN
+F 2 "custom_components:SMD_JUMPER" H 1950 1400 50  0001 C CNN
+F 3 "" H 1950 1400 50  0001 C CNN
+	1    1950 1400
 	0    1    1    0   
 $EndComp
-Connection ~ 2050 1200
-Wire Wire Line
-	2050 1200 1850 1200
-Wire Wire Line
-	1850 1400 2050 1400
-Connection ~ 1850 1400
 $Comp
 L Device:R_Small R15
 U 1 1 5B5E8E16
@@ -968,4 +947,26 @@ Wire Wire Line
 Connection ~ 4900 1350
 Wire Wire Line
 	4900 1350 4900 2000
+$Comp
+L Device:D_Zener_Small D1
+U 1 1 5B6230FB
+P 1950 1600
+F 0 "D1" V 1904 1668 50  0000 L CNN
+F 1 "Zener_3v3" V 1995 1668 50  0000 L CNN
+F 2 "custom_components:SOD-323_Handsoldering" V 1950 1600 50  0001 C CNN
+F 3 "~" V 1950 1600 50  0001 C CNN
+	1    1950 1600
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	1100 1400 1850 1400
+Wire Wire Line
+	1850 1400 1850 1200
+Wire Wire Line
+	1850 1200 1950 1200
+Wire Wire Line
+	1950 1300 1950 1200
+Connection ~ 1950 1200
+Wire Wire Line
+	2150 1200 2350 1200
 $EndSCHEMATC

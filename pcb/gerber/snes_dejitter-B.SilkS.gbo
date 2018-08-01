@@ -1,12 +1,12 @@
 G04 #@! TF.GenerationSoftware,KiCad,Pcbnew,5.0.0-rc2+dfsg1-3*
-G04 #@! TF.CreationDate,2018-07-29T23:17:11+03:00*
+G04 #@! TF.CreationDate,2018-08-01T23:56:54+03:00*
 G04 #@! TF.ProjectId,snes_dejitter,736E65735F64656A69747465722E6B69,rev?*
 G04 #@! TF.SameCoordinates,Original*
 G04 #@! TF.FileFunction,Legend,Bot*
 G04 #@! TF.FilePolarity,Positive*
 %FSLAX46Y46*%
 G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
-G04 Created by KiCad (PCBNEW 5.0.0-rc2+dfsg1-3) date Sun Jul 29 23:17:11 2018*
+G04 Created by KiCad (PCBNEW 5.0.0-rc2+dfsg1-3) date Wed Aug  1 23:56:54 2018*
 %MOMM*%
 %LPD*%
 G01*

@@ -6,7 +6,7 @@ snes_dejitter is a mod board which eliminates sync jitter of NES/SNES 240p modes
 Requirements for building the board and CPLD firmware
 --------------------------------------------------------
 * Hardware
-  * [PCB](https://oshpark.com/shared_projects/BUQd5HjY) + [parts](pcb/bom/snes_dejitter.ods)
+  * [PCB](https://oshpark.com/shared_projects/NkuS1ju6) + [parts](pcb/bom/snes_dejitter.ods)
 
 * Software
   * [Altera Quartus II version 13.0sp1 with MAX7000 support](http://dl.altera.com/13.0sp1/?edition=web)
@@ -58,7 +58,7 @@ CPLD image build procedure
 
 Board flashing
 --------------------------------------------------------
-The board can be flashed using any OpenOCD supported JTAG programmer that provides 3.3V-5V IO signal level. A standalone snes_jitter board is flashed by hooking all of its 6 JTAG header pins to respective pins of the programmer/cable, and by running flash procedure specified below. After the board has been installed to NES/SNES, firmware can be subsequently updated, but in this method 5V pin of the JTAG connector MUST be left disconnected, and programming needs to be done while NES/SNES is powered on (without a game is ok). The update procedure is similar in both cases:
+The board can be flashed using any OpenOCD supported JTAG programmer that supports 3.3V-5V IO signal level (TCK, TMS and TDI are TTL inputs with 10k pull-downs). If 3.3V IO is used, JP4 (on v1.3 PCB) should be closed which clamps TDO output to 3.3V. A standalone snes_jitter board is flashed by hooking all of its 6 JTAG header pins to respective pins of the programmer/cable, and by running flash procedure specified below. After the board has been installed to NES/SNES, firmware can be subsequently updated, but in this method 5V pin of the JTAG connector MUST be left disconnected, and programming needs to be done while NES/SNES is powered on (without a game is ok). The update procedure is similar in both cases:
 
 1. Create openocd.conf that matches your JTAG programmer. A configuration file for FT2232-based programmers is found in installation/openocd-ft2232.conf, and it uses following standard pinout for data signals:
 
@@ -97,13 +97,13 @@ Jumper  | Description
 JP1     | Forces CLK_SEL_i high. Removed on v1.2 since it was mostly for debugging purposes.
 JP2     | Enables MCLK_o voltage divider. Recommended for NES installations to ensure signal level is safe for NESRGB.
 JP3     | Connects optional 330pF output capacitor on CSYNC_o.
-JP4     | Bypass TDO voltage divider. Recommended if board is flashed with a 5V programmer.
+JP4     | Enable TDO voltage clamp. Recommended if board is flashed with a 3.3V programmer.
 
 PCB revision history
 --------------------------------------------------------
 ### v1.3
-* change (R4,R5) and (R9,R10) voltage divider values
-* add JP4 to improve interoperability with 5V programmers
+* change (R9,R10) voltage divider values
+* replace TDO voltage divider with an optional zener clamp (selectable via JP4)
 * add R15 pulldown to prevent floating input pin
 
 ### v1.2
@@ -123,7 +123,7 @@ FAQ
 * VGP [store](https://www.videogameperfection.com/products/snes-jitter-kit/) offers pre-assembled boards with optional installation service.
 
 ### Can I flash the board with USB Blaster?
-* USB Blaster is compatible with OpenOCD, but you have to check your programmer details (official/clone, 5V compatibility) and hook up and configure it accordingly. USB Blaster (or its usual clones) does not supply voltage on the board, but instead require connection from the board's supply to Vcc(TRGT) pin of the debug connector. You must thus power the board externally, connect 5V to Vcc(TRGT) (make sure your programmer supports 5V operation!) and possibly short JP4. Some clones also require hacks on OpenOCD to operate correctly, see the [thread](https://shmups.system11.org/viewtopic.php?f=6&t=61285) for more details.
+* USB Blaster is compatible with OpenOCD, but you have to check your programmer details (official/clone, 5V compatibility) and hook up and configure it accordingly. Official USB Blaster has fixed 6MHz TCK frequency which is probably too high for the board, so USB Blaster II and clones are more likely to work. None of the USB Blasters supply voltage on the board, but instead require connection from the board's supply to Vcc(TRGT) pin of the debug connector. You must thus power the board externally and connect 5V to Vcc(TRGT) (make sure your programmer supports 5V operation!). Some clones also require hacks on OpenOCD to operate correctly, see the [thread](https://shmups.system11.org/viewtopic.php?f=6&t=61285) for more details.
 
 ### Which other programmers can I use?
 * OpenOCD supports a wide range of [debug adapters](http://openocd.org/doc/html/Debug-Adapter-Hardware.html). Several people also have programmed their boards using a Raspberry Pi. Instructions and tools for RPI can be found on the [thread](https://shmups.system11.org/viewtopic.php?f=6&t=61285).
@@ -132,4 +132,4 @@ FAQ
 * Yes, but in very minimal way - in 1 hour of gameplay a de-jittered system falls less than 2 frames behind a vanilla system.
 
 ### Is it possible to disable de-jitter functionality after installation?
-* When the board is installed so that MCLK_EXT_i and CLK_SEL_i are not used, a simple bypass can be added without firmware modifications. To do that, connect MCLK_EXT_i to CPLD pin 37 (MCLK_XTAL_i) and add a ON-OFF switch that connects MCLK_SEL_i to 5V.
+* When the board is installed so that MCLK_EXT_i and CLK_SEL_i are not used, a simple bypass can be added without firmware modifications. To do that, connect MCLK_EXT_i to CPLD pin 34 (MCLK_XTAL_o) and add a ON-OFF switch that connects MCLK_SEL_i to 5V.
