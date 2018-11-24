@@ -9,8 +9,8 @@ Features
 Steps
 
 1. Remove R4, R5 and R25 from SNES mainboard
-2. Leave C8 unpopulated on snes_dejitter board (on v1.2 revision leave JP3 open)
-3. Short JP2 on snes_dejitter board (v1.2 revision only)
+2. Leave JP3 open on snes_dejitter board (rev v1.0/v1.1: leave C8 unpopulated)
+3. Short JP2 on snes_dejitter board (v1.2 and higher revisions only)
 4. Cover copper areas on the bottom of snes_dejitter with electrical tape
 5. Attach snes_dejitter on the bottom of SNES mainboard via double-sided adhesive tape
 6. Connect 5V, GND, CSYNC_i, CSYNC_o and MCLK_o as shown in image below
