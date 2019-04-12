@@ -16,4 +16,4 @@ set_max_delay 10 -from [get_ports {MCLK_XTAL_i MCLK_EXT_i}] -to [get_ports GCLK_
 
 # Ignore timing of the following signals
 set_false_path -from [get_ports {MCLK_SEL_i}]
-set_false_path -to [get_ports CSYNC_o]
+set_false_path -to [get_ports {CSYNC_o SC_o}]

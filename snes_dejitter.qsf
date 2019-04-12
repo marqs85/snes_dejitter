@@ -57,5 +57,6 @@ set_location_assignment PIN_39 -to CSYNC_i
 set_location_assignment PIN_38 -to MCLK_SEL_i
 set_location_assignment PIN_18 -to GCLK_o
 set_location_assignment PIN_15 -to CSYNC_o
+set_location_assignment PIN_11 -to SC_o
 
 set_global_assignment -name VERILOG_FILE rtl/snes_dejitter.v
