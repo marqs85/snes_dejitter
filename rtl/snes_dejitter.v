@@ -30,7 +30,8 @@ module snes_dejitter(
     input CSYNC_i,
     output MCLK_XTAL_o,
     output GCLK_o,
-    output CSYNC_o
+    output CSYNC_o,
+    output reg SC_o
 );
 
 wire mclk_ntsc = MCLK_XTAL_i;
@@ -48,6 +49,7 @@ reg csync_prev;
 reg csync_dejitter;
 reg gclk_en;
 reg CSYNC_i_L;
+reg [1:0] sc_ctr;
 
 
 always @(posedge mclk_ntsc) begin
@@ -68,10 +70,22 @@ always @(posedge mclk_ntsc) begin
     csync_prev <= CSYNC_i_L;
 end
 
+always @(negedge mclk_ntsc) begin
+    CSYNC_i_L <= CSYNC_i;
+end
+
+always @(posedge mclk_ntsc) begin
+    if (sc_ctr == 2'h2) begin
+        sc_ctr <= 2'h0;
+        SC_o <= ~SC_o;
+    end else begin
+        sc_ctr <= sc_ctr + 2'h1;
+    end
+end
+
 `ifdef EDGE_SENSITIVE_CLKEN
 //Update clock gate enable signal on negative edge
 always @(negedge mclk_ntsc) begin
-	CSYNC_i_L <= CSYNC_i;
     gclk_en <= (g_cyc == 0);
 end
 `else
